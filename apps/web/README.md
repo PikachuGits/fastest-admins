@@ -35,3 +35,12 @@ pnpm serve
 ```
 
 For more information, see the [Modern.js documentation](https://modernjs.dev/en).
+
+
+
+nginx 配置
+```bash
+   location / {
+        try_files $uri $uri/ /index.html;
+    }
+```

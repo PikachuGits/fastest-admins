@@ -1,0 +1,43 @@
+import type { TreeViewBaseItem } from '@mui/x-tree-view/models';
+
+type TreeItemType = {
+  id: string;
+  label: string;
+  disabled?: boolean;
+  editable?: boolean;
+};
+
+export const MUI_X_PRODUCTS: TreeViewBaseItem<TreeItemType>[] = [
+  {
+    id: 'grid',
+    label: '系统',
+    editable: false,
+    children: [
+      { id: 'grid-community', label: '@mui/x-data-grid', editable: true },
+      { id: 'grid-pro', label: '@mui/x-data-grid-pro', editable: true },
+      { id: 'grid-premium', label: '@mui/x-data-grid-premium', editable: true },
+    ],
+  },
+  {
+    id: 'pickers',
+    label: '门店',
+    children: [
+      {
+        id: 'pickers-community',
+        label: '@mui/x-date-pickers',
+        disabled: true,
+      },
+      { id: 'pickers-pro', label: '@mui/x-date-pickers-pro', editable: true },
+    ],
+  },
+  {
+    id: 'charts',
+    label: 'Charts',
+    children: [{ id: 'charts-community', label: '@mui/x-charts' }],
+  },
+  {
+    id: 'tree-view',
+    label: 'Tree View',
+    children: [{ id: 'tree-view-community', label: '@mui/x-tree-view' }],
+  },
+];

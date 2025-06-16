@@ -16,7 +16,9 @@
     "pre-commit": "npx lint-staged"
   },
   "lint-staged": {
-    "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": ["biome check --files-ignore-unknown=true"]
+    "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
+      "biome check --files-ignore-unknown=true"
+    ]
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -25,7 +27,10 @@
     "@modern-js/plugin-router-v7": "^2.67.8",
     "@modern-js/plugin-tailwindcss": "2.67.8",
     "@modern-js/runtime": "2.67.8",
+    "@mui/icons-material": "^7.1.1",
     "@mui/material": "^7.1.1",
+    "@mui/x-tree-view": "^8.5.2",
+    "@react-spring/web": "^10.0.1",
     "ahooks": "^3.8.5",
     "notistack": "^3.0.2",
     "overlayscrollbars": "^2.11.4",

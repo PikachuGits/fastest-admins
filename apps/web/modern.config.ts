@@ -11,13 +11,25 @@ export default defineConfig({
   runtime: {
     router: true,
   },
+  server: {
+    // ssr: true,
+  },
   source: {
+    mainEntryName: 'index',
     alias: {
       '@': path.resolve(__dirname, 'src'),
       '@public': path.resolve(__dirname, '../../public'),
     },
   },
-
+  output: {
+    disableSourceMap: true,
+    distPath: {
+      html: '',
+    },
+  },
+  html: {
+    disableHtmlFolder: true,
+  },
   builderPlugins: [rsbuildPluginAppLoading({})],
   plugins: [
     tailwindcssPlugin(),

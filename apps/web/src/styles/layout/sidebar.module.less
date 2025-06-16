@@ -1,12 +1,12 @@
 .sidebar__root {
   width: 300px;
-  height: calc(100vh - 20px);
+  height: 100vh;
   position: fixed;
-  top: 10px;
-  left: 10px;
+  top: 0;
+  left: 0;
   z-index: 1000;
+  padding: 10px 0 10px  10px;
   background-color: transparent;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .sidebar_collapsed {
@@ -19,9 +19,24 @@
   border: 1px solid blue;
 } */
 
-.sidebar__content {
+.sidebar__container {
   border-radius: 10px;
   width: 100%;
   height: 100%;
   background-color: #fff;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  padding: 16px;
+}
+
+.sidebar__content {
+  width: inherit;
+  height: inherit;
+}
+.sidebar__content_header {
+  width: inherit;
+  border: 1px solid green;
+}
+.sidebar__content_body {
+  width: inherit;
+  height: inherit;
 }

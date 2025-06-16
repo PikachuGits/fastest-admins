@@ -4,6 +4,7 @@ import styles from '@/styles/layout/sidebar.module.less';
 import { Iconify } from '@fastest/components';
 import { classes } from '@fastest/utils';
 import { IconButton, styled } from '@mui/material';
+import DefaultMenu from './component/DefaultMenu';
 
 /**
  * 折叠按钮
@@ -41,7 +42,14 @@ export default function Sidebar() {
       >
         <Iconify icon="eva:arrow-ios-forward-fill" className="text-base text-gary-500 cursor-pointer " />
       </IconCollapsed>
-      <div className={styles.sidebar__content}>123</div>
+      <div className={styles.sidebar__container}>
+        <div className={styles.sidebar__content}>
+          <div className={styles.sidebar__content_header}> </div>
+          <div className={styles.sidebar__content_body}>
+            <DefaultMenu />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

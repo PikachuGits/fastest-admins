@@ -2,6 +2,7 @@ import Root from '@/layout';
 import Dashboard from '@/pages/Dashboard';
 import Error404 from '@/pages/Error/404';
 import { createBrowserRouter } from '@modern-js/runtime/router';
+import About from '@/pages/About';
 
 export const router = createBrowserRouter([
   {
@@ -12,6 +13,10 @@ export const router = createBrowserRouter([
       {
         path: '/',
         element: <Dashboard />,
+      },
+      {
+        path: '/about',
+        element: <About />,
       },
     ],
   },

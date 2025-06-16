@@ -1,8 +1,8 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import fs from 'fs';
-import fsp from 'fs/promises';
-import { join } from 'path';
-import { fileURLToPath } from 'url';
+import fs from 'node:fs';
+import fsp from 'node:fs/promises';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 /**
  * 替换模板变量，如 <%= LOADING_APP_TITLE %>

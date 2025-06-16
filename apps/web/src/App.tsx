@@ -28,7 +28,7 @@ export default function App() {
   return (
     <StrictMode>
       <ThemeProvider>
-        <link rel="icon" type="image/x-icon" href={favicon} />
+        {/* <link rel="icon" type="image/x-icon" href={favicon} /> */}
         {/* <link rel="icon" type="image/x-icon" href="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/favicon.ico" /> */}
         <CssBaseline />
         <SnackbarProvider
@@ -42,9 +42,7 @@ export default function App() {
           preventDuplicate // 防止重复通知
           hideIconVariant // 隐藏通知图标
         >
-          <OverlayScrollbarsComponent className="wrapper" element={'div'}>
-            <RouterProvider router={router} />
-          </OverlayScrollbarsComponent>
+          <RouterProvider router={router} />
         </SnackbarProvider>
       </ThemeProvider>
     </StrictMode>
