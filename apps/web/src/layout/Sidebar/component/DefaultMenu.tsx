@@ -80,7 +80,7 @@ const CustomContent = React.forwardRef(function CustomContent(props: any, ref: R
   const isFirstLevel = !id?.includes('-');
   const styles = isFirstLevel ? firstLevelStyles : subLevelStyles;
 
-  return <Box className="custom-content" ref={ref} {...other} sx={styles.content} />;
+  return <Box className="custom-content-1" ref={ref} {...other} sx={styles.content} />;
 });
 
 /**
