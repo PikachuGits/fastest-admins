@@ -1,0 +1,48 @@
+{
+  "routes": [
+    {
+      "path": "/",
+      "component": "@/pages/Layout",
+      "children": [
+        {
+          "path": "dashboard",
+          "component": "@/pages/Dashboard",
+          "meta": {
+            "title": "仪表盘",
+            "icon": "dashboard",
+            "auth": true
+          }
+        },
+        {
+          "path": "user",
+          "component": "@/pages/User",
+          "lazy": true,
+          "meta": {
+            "title": "用户管理",
+            "icon": "user",
+            "auth": true
+          },
+          "children": [
+            {
+              "path": "list",
+              "component": "@/pages/User/List",
+              "meta": {
+                "title": "用户列表",
+                "auth": true
+              }
+            },
+            {
+              "path": "profile",
+              "component": "@/pages/User/Profile",
+              "lazy": true,
+              "meta": {
+                "title": "用户资料",
+                "auth": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

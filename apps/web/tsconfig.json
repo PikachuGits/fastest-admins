@@ -1,0 +1,22 @@
+{
+  "extends": "@fastest/tsconfig/tsconfig.monorepo.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "es2020",
+    "moduleResolution": "bundler",
+    "declaration": false,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "@shared/*": ["shared/*"],
+      "@public/*": ["../../public/*"]
+    },
+    "jsx": "preserve",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  },
+  "include": ["src", "types", "shared", "config", "modern.config.ts", "tailwind.config.ts"],
+  "exclude": ["**/node_modules"]
+}

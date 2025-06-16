@@ -1,0 +1,16 @@
+{
+  "name": "@fastest/tsconfig",
+  "version": "1.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vbenjs/vue-vben-admin.git",
+    "directory": "internal/tsconfig"
+  },
+  "license": "MIT",
+  "type": "module",
+  "files": ["tsconfig.json"],
+  "devDependencies": {
+    "@modern-js/tsconfig": "2.67.8"
+  }
+}

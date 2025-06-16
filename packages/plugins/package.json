@@ -1,0 +1,31 @@
+{
+  "name": "@fastest/plugins",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
+  "exports": {
+    "./loading": {
+      "import": "./src/rsbuild-inject-app-loading/index.ts",
+      "types": "./src/rsbuild-inject-app-loading/index.ts"
+    },
+    "./unloading": {
+      "import": "./src/rsbuild-inject-app-loading/unmount-global-loading.ts",
+      "types": "./src/rsbuild-inject-app-loading/unmount-global-loading.ts"
+    }
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@rsbuild/core": "^1.3.18",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.17",
+    "typescript": "^5.0.0"
+  }
+}

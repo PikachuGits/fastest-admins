@@ -1,0 +1,24 @@
+{
+  "extends": "@modern-js/tsconfig/base",
+  "compilerOptions": {
+    "declaration": false,
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@fastest/plugins/*": ["packages/effects/plugins/*"],
+      "@fastest/utils/*": ["packages/utils/*"],
+      "@fastest/components/*": ["packages/components/*"]
+    }
+  },
+  "references": [
+    {
+      "path": "packages/effects/plugins"
+    },
+    {
+      "path": "packages/utils"
+    },
+    {
+      "path": "packages/components"
+    }
+  ]
+}
