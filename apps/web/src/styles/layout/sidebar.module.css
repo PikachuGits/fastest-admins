@@ -8,18 +8,15 @@
   padding: 10px 0 10px  10px;
   background-color: transparent;
 }
-
 .sidebar_collapsed {
   border: 1px solid red;
   width: var(--collapsed-wh);
   height: var(--collapsed-wh);
 }
-
 /* .sidebar__header {
   height: 72px;
   border: 1px solid blue;
 } */
-
 .sidebar__container {
   border-radius: 10px;
   width: 100%;
@@ -28,7 +25,6 @@
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   padding: 16px;
 }
-
 .sidebar__content {
   width: inherit;
   height: inherit;

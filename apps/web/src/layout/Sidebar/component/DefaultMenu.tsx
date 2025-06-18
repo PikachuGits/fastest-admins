@@ -1,16 +1,15 @@
 import * as React from 'react';
-import { Children, useState } from 'react';
+import { Children, useState, useEffect } from 'react';
 import { RichTreeView } from '@mui/x-tree-view/RichTreeView';
 import { type TreeItemProps, TreeItemRoot, TreeItemContent, TreeItemGroupTransition } from '@mui/x-tree-view/TreeItem';
 import { TreeItemIcon } from '@mui/x-tree-view/TreeItemIcon';
 import { TreeItemProvider } from '@mui/x-tree-view/TreeItemProvider';
 import { useTreeItem } from '@mui/x-tree-view/useTreeItem';
-
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography, Button, ListItemButton, ListItemText } from '@mui/material';
 import { MUI_X_PRODUCTS } from './products';
 // 导入所需的图标
 import { Iconify } from '@fastest/components';
-
+import { useNavigate, useLocation } from '@modern-js/runtime/router';
 // ========================== 类型定义 ==========================
 
 /**
@@ -53,6 +52,70 @@ function findNodeInTree(nodes: any, targetId: any): any {
   return undefined;
 }
 
+/**
+ * 获取从根节点到目标节点的完整路径
+ * @param nodes 树形数据数组
+ * @param targetId 目标节点 ID
+ * @param path 当前路径（用于递归）
+ * @returns 包含所有父级节点 ID 的数组
+ */
+function getNodePath(nodes: any, targetId: any, path: string[] = []): string[] {
+  for (const node of nodes) {
+    const currentPath = [...path, node.id];
+
+    // 如果找到目标节点，返回完整路径
+    if (node.id === targetId) {
+      return currentPath;
+    }
+
+    // 如果当前节点有子节点，递归查找
+    if (node.children && node.children.length > 0) {
+      const foundPath = getNodePath(node.children, targetId, currentPath);
+      if (foundPath.length > 0) {
+        return foundPath;
+      }
+    }
+  }
+
+  return [];
+}
+
+/**
+ * 判断节点是否为叶子节点（没有子节点）
+ * @param nodes 树形数据数组
+ * @param nodeId 节点 ID
+ * @returns 是否为叶子节点
+ */
+function isLeafNode(nodes: any, nodeId: string): boolean {
+  const node = findNodeInTree(nodes, nodeId);
+  return node && (!node.children || node.children.length === 0);
+}
+
+/**
+ * 根据路径查找对应的节点
+ * @param nodes 树形数据数组
+ * @param targetPath 目标路径
+ * @returns 找到的节点或 undefined
+ */
+function findNodeByPath(nodes: any, targetPath: string): any {
+  for (const node of nodes) {
+    // 如果找到匹配的路径，直接返回
+    if (node.path === targetPath) {
+      return node;
+    }
+
+    // 如果当前节点有子节点，递归查找
+    if (node.children && node.children.length > 0) {
+      const foundInChild: any = findNodeByPath(node.children, targetPath);
+      if (foundInChild) {
+        return foundInChild;
+      }
+    }
+  }
+
+  return undefined;
+}
+
 // ========================== 自定义组件 ==========================
 
 /**
@@ -77,7 +140,7 @@ const CustomTreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(function C
 
   // 从数据源中查找当前项的完整信息
   const nodeData = findNodeInTree(MUI_X_PRODUCTS, itemId);
-  const { level = 1, icon } = nodeData || {};
+  const { level = 1, icon, path } = nodeData || {};
 
   // 计算子项数量，用于绘制连接线
   const childrenCount = Children.count(children);
@@ -104,11 +167,15 @@ const CustomTreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(function C
    * 按钮样式 - 统一的交互样式
    */
   const baseButtonStyles = {
+    backgroundColor: 'transparent !important',
     width: '100%',
     textAlign: 'left' as const,
     justifyContent: 'flex-start',
     textTransform: 'none' as const,
     position: 'relative' as const,
+    '&:hover': {
+      backgroundColor: 'transparent !important', // 或你想要的颜色
+    },
   };
 
   const buttonStyles = {
@@ -189,7 +256,10 @@ const CustomTreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(function C
       <TreeItemRoot {...getRootProps()} ref={ref} sx={rootStyles}>
         {/* 内容区域 */}
         <TreeItemContent {...getContentProps()} sx={contentStyles}>
-          <Button variant="text" sx={level === 1 ? baseButtonStyles : buttonStyles}>
+          {/* <ListItemButton component="a" href={path} sx={level === 1 ? baseButtonStyles : buttonStyles}>
+            <ListItemText primary={renderLabelContent()} />
+          </ListItemButton> */}
+          <Button variant="text" color="inherit" sx={level === 1 ? baseButtonStyles : buttonStyles}>
             {/* 图标显示 */}
             {icon && <Iconify icon={icon} className="text-base w-24 h-24 text-gray-500 cursor-pointer flex-shrink-0 mr-2" />}
             {/* 标签内容 */}
@@ -213,26 +283,90 @@ const CustomTreeItem = React.forwardRef<HTMLLIElement, TreeItemProps>(function C
  * 提供完整的树形导航功能，支持多级菜单和自定义样式
  */
 export default function CustomRichTreeView() {
+  const navigate = useNavigate();
+  const location = useLocation();
   // ========================== 状态管理 ==========================
 
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
+  // ========================== 路由回显逻辑 ==========================
+
+  /**
+   * 根据当前路由初始化菜单状态
+   */
+  useEffect(() => {
+    const currentPath = location.pathname;
+
+    // 根据当前路径查找对应的菜单节点
+    const matchedNode = findNodeByPath(MUI_X_PRODUCTS, currentPath);
+
+    if (matchedNode) {
+      // 获取完整路径（包含所有父级节点）
+      const fullPath = getNodePath(MUI_X_PRODUCTS, matchedNode.id);
+
+      // 设置选中状态
+      setSelectedItems(fullPath);
+
+      // 设置展开状态（展开所有父级节点）
+      if (fullPath.length > 1) {
+        // 移除最后一个元素（当前节点），只展开父级节点
+        const parentPath = fullPath.slice(0, -1);
+        setExpandedItems(parentPath);
+      }
+
+      console.log('Route matched:', {
+        currentPath,
+        matchedNode: matchedNode.id,
+        fullPath,
+        expandedPath: fullPath.slice(0, -1),
+      });
+    } else {
+      console.log('No menu item matches current route:', currentPath);
+    }
+  }, [location.pathname]);
+
   // ========================== 事件处理 ==========================
 
   /**
    * 处理菜单项选择事件
+   * 当选中叶子节点时，同时选中所有父级节点并导航
    */
-  const handleSelectedItemsChange = (_event: React.SyntheticEvent | null, itemIds: string | null) => {
-    setSelectedItems(itemIds ? [itemIds] : []);
-    console.log('Selected Items:', itemIds);
+  const handleSelectedItemsChange = (_event: React.SyntheticEvent | null, itemIds: string[]) => {
+    if (!itemIds || itemIds.length === 0) {
+      return;
+    }
+
+    // 获取最后选中的项（最新选中的项）
+    const lastSelectedId = itemIds[itemIds.length - 1];
+    const nodeData = findNodeInTree(MUI_X_PRODUCTS, lastSelectedId);
+
+    if (!nodeData) {
+      return;
+    }
+
+    // 如果是叶子节点且有路径，则导航到对应页面
+    if (isLeafNode(MUI_X_PRODUCTS, lastSelectedId) && nodeData.path) {
+      console.log('Navigating to:', nodeData.path);
+      navigate(nodeData.path);
+      // 注意：导航后会触发 useEffect，自动更新菜单状态
+    } else {
+      // 如果是父级节点，只展开/收起，不导航
+      const isCurrentlyExpanded = expandedItems.includes(lastSelectedId);
+      if (isCurrentlyExpanded) {
+        // 收起当前节点
+        setExpandedItems(prev => prev.filter(id => id !== lastSelectedId));
+      } else {
+        // 展开当前节点
+        setExpandedItems(prev => [...prev, lastSelectedId]);
+      }
+    }
   };
 
   /**
    * 处理菜单项展开/收起事件
    */
   const handleExpandedItemsChange = (_event: React.SyntheticEvent | null, itemIds: string[]) => {
-    console.log('Expanded Items:', itemIds);
     setExpandedItems(itemIds);
   };
 
@@ -266,12 +400,27 @@ export default function CustomRichTreeView() {
       }}
     >
       <RichTreeView
+        sx={{
+          '& [data-focused]': {
+            color: '#00A76F !important', // 或你想要的颜色
+            backgroundColor: 'rgba(0, 167, 111, 0.08) !important', // 或你想要的颜色
+          },
+          '& [data-selected]': {
+            color: '#00A76F !important', // 或你想要的颜色
+            backgroundColor: 'rgba(0, 167, 111, 0.08) !important', // 或你想要的颜色
+            '&:hover': {
+              color: '#00A76F !important', // 或你想要的颜色
+              backgroundColor: 'rgba(0, 167, 111, 0.08) !important', // 或你想要的颜色
+            },
+          },
+        }}
         aria-label="file system navigator"
         items={MUI_X_PRODUCTS}
-        selectedItems={selectedItems[0] || ''}
+        selectedItems={selectedItems}
         onSelectedItemsChange={handleSelectedItemsChange}
         expandedItems={expandedItems}
         onExpandedItemsChange={handleExpandedItemsChange}
+        multiSelect={true}
         slots={{
           item: CustomTreeItem,
           collapseIcon: CollapseIcon,
