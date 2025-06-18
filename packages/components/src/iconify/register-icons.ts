@@ -37,7 +37,7 @@ export function registerIcons() {
     return;
   }
 
-  iconSets.forEach(iconSet => {
+  for (const iconSet of iconSets) {
     const iconSetConfig = {
       ...iconSet,
       width: (iconSet.prefix === 'carbon' && 32) || 24,
@@ -45,7 +45,7 @@ export function registerIcons() {
     };
 
     addCollection(iconSetConfig);
-  });
+  }
 
   areIconsRegistered = true;
 }

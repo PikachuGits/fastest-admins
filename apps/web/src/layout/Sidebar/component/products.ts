@@ -5,39 +5,62 @@ type TreeItemType = {
   label: string;
   disabled?: boolean;
   editable?: boolean;
+  level?: number;
+  icon?: string;
 };
 
 export const MUI_X_PRODUCTS: TreeViewBaseItem<TreeItemType>[] = [
   {
-    id: 'grid',
-    label: '系统',
+    id: '1',
+    label: '系统管理',
+    level: 1,
     editable: false,
+    icon: 'solar:box-minimalistic-bold',
     children: [
-      { id: 'grid-community', label: '@mui/x-data-grid', editable: true },
-      { id: 'grid-pro', label: '@mui/x-data-grid-pro', editable: true },
-      { id: 'grid-premium', label: '@mui/x-data-grid-premium', editable: true },
+      { id: '2', label: '用户管理', editable: true, level: 2, icon: 'solar:smartphone-2-bold' },
+      { id: '3', label: '角色管理', editable: true, level: 2, icon: 'solar:smartphone-2-bold' },
+      {
+        id: '4',
+        label: '权限管理',
+        editable: true,
+        level: 2,
+        icon: 'solar:smartphone-2-bold',
+        children: [
+          { id: '12', label: '菜单管理', editable: true, level: 3 },
+          { id: '13', label: '按钮管理', editable: true, level: 3 },
+          { id: '14', label: '数据权限', editable: true, level: 3 },
+        ],
+      },
     ],
   },
   {
-    id: 'pickers',
-    label: '门店',
+    id: '5',
+    label: '门店管理',
+    level: 1,
+    icon: 'solar:home-angle-bold-duotone',
     children: [
       {
-        id: 'pickers-community',
-        label: '@mui/x-date-pickers',
+        id: '6',
+        label: '门店管理',
         disabled: true,
+        level: 2,
+        icon: 'solar:home-angle-bold-duotone',
       },
-      { id: 'pickers-pro', label: '@mui/x-date-pickers-pro', editable: true },
+      { id: '7', label: '门店列表', editable: true, level: 2, icon: 'solar:home-angle-bold-duotone' },
     ],
   },
   {
-    id: 'charts',
-    label: 'Charts',
-    children: [{ id: 'charts-community', label: '@mui/x-charts' }],
+    id: '8',
+    label: '商品管理',
+    level: 1,
+    icon: 'solar:home-angle-bold-duotone',
+    children: [{ id: '9', label: '商品列表', level: 2, icon: 'solar:home-angle-bold-duotone' }],
   },
   {
-    id: 'tree-view',
-    label: 'Tree View',
-    children: [{ id: 'tree-view-community', label: '@mui/x-tree-view' }],
+    id: '10',
+    label: '订单管理',
+    level: 1,
+    icon: 'solar:home-angle-bold-duotone',
+    children: [{ id: '11', label: '订单列表', level: 2, icon: 'solar:home-angle-bold-duotone' }],
   },
 ];
