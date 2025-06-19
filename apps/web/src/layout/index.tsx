@@ -11,6 +11,7 @@ const ContainerLayout = styled(Box)(({ theme }) => {
     position: 'absolute',
     flex: 1,
     padding: '80px 40px 64px 340px',
+    overflow: 'auto',
   };
 });
 

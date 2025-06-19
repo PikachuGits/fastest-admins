@@ -30,7 +30,6 @@ export default function App() {
       <ThemeProvider>
         {/* <link rel="icon" type="image/x-icon" href={favicon} /> */}
         {/* <link rel="icon" type="image/x-icon" href="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/favicon.ico" /> */}
-        <CssBaseline />
         <SnackbarProvider
           maxSnack={3} // 最多同时显示3条通知
           anchorOrigin={{

@@ -32,6 +32,7 @@ export const MUI_X_PRODUCTS: TreeViewBaseItem<TreeItemType>[] = [
           { id: '12', label: '菜单管理', editable: true, level: 3, path: '/system/user' },
           { id: '13', label: '按钮管理', editable: true, level: 3, path: '/system/permission/button' },
           { id: '14', label: '数据权限', editable: true, level: 3, path: '/system/permission/data' },
+          { id: '20', label: '图标管理', editable: true, level: 3, path: '/icon' },
         ],
       },
     ],
